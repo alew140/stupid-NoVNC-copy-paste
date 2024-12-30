@@ -1,4 +1,4 @@
-# stupid-VNC-copy-paste 📋
+# stupid-NoVNC-copy-paste 📋
 
 > Add copy-paste to your VNC sessions with a simple script! 🚀
 
