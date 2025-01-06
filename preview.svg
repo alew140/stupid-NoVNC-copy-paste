@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640">
+    <!-- Fondo oscuro -->
+    <rect width="1280" height="640" fill="#1a1a1a"/>
+    
+    <!-- Ventana de NoVNC -->
+    <rect x="140" y="80" width="1000" height="500" rx="10" fill="#2d2d2d"/>
+    <rect x="140" y="80" width="1000" height="40" rx="10" fill="#3d3d3d"/>
+    
+    <!-- Botones de ventana -->
+    <circle cx="170" cy="100" r="8" fill="#ff5f57"/>
+    <circle cx="190" cy="100" r="8" fill="#febc2e"/>
+    <circle cx="210" cy="100" r="8" fill="#28c840"/>
+    
+    <!-- Título de la ventana -->
+    <text x="640" y="105" fill="#ffffff" font-family="monospace" font-size="16" text-anchor="middle">NoVNC Terminal Session</text>
+    
+    <!-- Terminal interior -->
+    <rect x="160" y="140" width="960" height="420" rx="5" fill="#000000"/>
+    
+    <!-- Prompt y comando -->
+    <text x="180" y="180" fill="#00ff00" font-family="monospace" font-size="16">user@novnc:~$</text>
+    <text x="320" y="180" fill="#ffffff" font-family="monospace" font-size="16">curl</text>
+    
+    <!-- URL que se va a pegar -->
+    <rect x="370" y="165" width="500" height="20" fill="#333333"/>
+    <text x="380" y="180" fill="#666666" font-family="monospace" font-size="16" opacity="0.7">https://github.com/alew140/stupid-NoVNC-copy-paste</text>
+    
+    <!-- Menú contextual -->
+    <rect x="370" y="200" width="180" height="90" rx="5" fill="#ffffff" filter="drop-shadow(0 0 4px rgba(0,0,0,0.3))"/>
+    <text x="390" y="230" fill="#000000" font-family="system-ui" font-size="14">📋 Paste</text>
+    <line x1="390" y1="240" x2="530" y2="240" stroke="#e0e0e0" stroke-width="1"/>
+    <text x="390" y="270" fill="#666666" font-family="system-ui" font-size="12">Right Click = Magic ✨</text>
+    
+    <!-- Flecha indicadora -->
+    <path d="M 460,200 C 460,190 460,185 460,180" fill="none" stroke="#00ff00" stroke-width="3" stroke-dasharray="5,5"/>
+    <path d="M 460,180 L 455,190 L 465,190" fill="none" stroke="#00ff00" stroke-width="3"/>
+    
+    <!-- Texto descriptivo en la parte inferior -->
+    <text x="640" y="600" fill="#ffffff" font-family="system-ui" font-size="20" text-anchor="middle" font-weight="bold">
+        stupid-NoVNC-copy-paste: Because typing URLs manually sucks! 🚀
+    </text>
+    
+    <!-- Emoji decorativos -->
+    <text x="950" y="230" font-size="40">✨</text>
+    <text x="900" y="400" font-size="40">📋</text>
+</svg>

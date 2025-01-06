@@ -1,25 +1,63 @@
-# stupid-NoVNC-copy-paste 📋
+# stupid-NoVNC-copy-paste 📋 V 1.2
 
-> Add copy-paste to your VNC sessions with a simple script! 🚀
+> ¡Porque a veces las soluciones más tontas son las mejores! 🚀
 
-## Quick Start ⚡
+Agrega copy-paste a NoVNC con un script Javascript ridículamente simple. Ahora con soporte para caracteres especiales y más configuraciones.
 
-1. Press `F12` to open browser console
-2. Copy content from `index.js`
-3. Paste into console
-4. Done! Now use right-click to paste text in your VNC session
+## ¿Por qué? 🤔
+Porque tener que escribir todo manualmente en NoVNC es una estupidez. Y sí, probablemente hay mejores maneras de hacer esto, pero hey, ¡esto funciona!
 
-## Known Issues 🐛
-Currently doesn't handle symbols that need Shift key (@, #, $, etc)
+## Inicio Rápido ⚡
+1. Presiona `F12` para abrir la consola del navegador
+2. Copia el contenido de `index.js`
+3. Pégalo en la consola
+4. ¡Listo! Ahora usa clic derecho para pegar texto en tu sesión NoVNC
 
-## Contribute 🤝
-Pull requests welcome for:
-- 🔧 Fix Shift key symbols
-- ✨ Code improvements
-- 🧩 Chrome extension version
+## Novedades en esta versión 🎉
+- ¡Por fin! Soporte para símbolos que necesitan Shift (@, #, $, etc)
+- Configuración personalizable (por si quieres hacerlo aún más estúpido)
+- Mejor manejo de errores (porque las cosas pueden fallar)
 
-## License 📄
-Free for all! Use it, modify it, share it.
+## Configuración (que no necesitamos) ⚙️
+```javascript
+// Configuración por defecto
+const vncPaste = new VNCPaste({
+    selector: '#noVNC_canvas',    // Selector principal del canvas
+    fallbackSelector: 'canvas',   // Selector de respaldo si el principal falla
+    delay: 50,                    // Velocidad de escritura (ms)
+    enableLogging: true,          // Para ver qué diablos está pasando
+    rightClickEnabled: true       // Por si prefieres usar vncPaste.sendString('text here')
+});
+vncPaste.init();
+
+// O si quieres ser más específico:
+const vncPasteCustom = new VNCPaste({
+    selector: '#miCanvasEspecial',
+    delay: 100,                   // Más lento para conexiones lentas
+    enableLogging: false,         // Modo silencioso
+    rightClickEnabled: false      // Desactiva el clic derecho
+});
+vncPasteCustom.init();
+```
+
+## Problemas Conocidos 🐛
+- A veces falla con algunos caracteres especiales ( o quizas ya lo arregle )
+- No es la solución más elegante del mundo (pero eso ya lo sabías)
+- Probablemente hay mejores maneras de hacer esto
+- Escribir no cuesta tanto 
+- Pegar el script de un desconocido en tu consola no suena como una buena idea
+
+## Contribuir 🤝
+¿Quieres hacer este proyecto menos estúpido? ¡Adelante!
+- Arregla cosas
+- Agrega features
+- Hazlo mejor
+- Vamos a ponerlo en una extension de chrome
+- O simplemente úsalo y ríete
+
+## Licencia 📄
+Haz lo que quieras con esto. En serio. no es como que me pueda volver rico con este repo
 
 ---
-Made with ☕ by [alew140](https://github.com/alew140)
+Hecho con 💖 por [alew140](https://alew140.com)
+---
