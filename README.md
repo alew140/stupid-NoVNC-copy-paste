@@ -1,63 +1,76 @@
-# stupid-NoVNC-copy-paste 📋 V 1.2
+# stupid-NoVNC-copy-paste 📋 V 1.3
 
-> ¡Porque a veces las soluciones más tontas son las mejores! 🚀
+> Because sometimes the dumbest solutions are the best! 🚀
 
-Agrega copy-paste a NoVNC con un script Javascript ridículamente simple. Ahora con soporte para caracteres especiales y más configuraciones.
+Add copy-paste to NoVNC with a ridiculously simple Javascript script. Now with support for special characters, proper case handling, and more configurations.
 
-## ¿Por qué? 🤔
-Porque tener que escribir todo manualmente en NoVNC es una estupidez. Y sí, probablemente hay mejores maneras de hacer esto, pero hey, ¡esto funciona!
 
-## Inicio Rápido ⚡
-1. Presiona `F12` para abrir la consola del navegador
-2. Copia el contenido de `index.js`
-3. Pégalo en la consola
-4. ¡Listo! Ahora usa clic derecho para pegar texto en tu sesión NoVNC
+## Why? 🤔
+Because having to type everything manually in NoVNC is stupid. And yes, there are probably better ways to do this, but hey, this works!
 
-## Novedades en esta versión 🎉
-- ¡Por fin! Soporte para símbolos que necesitan Shift (@, #, $, etc)
-- Configuración personalizable (por si quieres hacerlo aún más estúpido)
-- Mejor manejo de errores (porque las cosas pueden fallar)
+## Quick Start ⚡
+1. Press `F12` to open the browser console
+2. Copy the content of `index.js`
+3. Paste it in the console
+4. Done! Now use right-click to paste text in your NoVNC session
 
-## Configuración (que no necesitamos) ⚙️
+### Test Example 🧪
+Try copying and pasting this text to test the functionality:
+```
+VNCPaste@2025#TestHash$Alew140.dev%
+```
+This example includes uppercase, lowercase, and special characters - all should work correctly now!
+
+## What's New in this Version 🎉
+- Finally! Support for symbols that need Shift (@, #, $, etc)
+- **Fixed case handling!** Now uppercase and lowercase letters work correctly 🎯⚠️ **Experimental**
+- Customizable configuration (in case you want to make it even more stupid)
+- Better error handling (because things can fail)
+
+## Configuration (that we don't need) ⚙️
 ```javascript
-// Configuración por defecto
+// Default configuration
 const vncPaste = new VNCPaste({
-    selector: '#noVNC_canvas',    // Selector principal del canvas
-    fallbackSelector: 'canvas',   // Selector de respaldo si el principal falla
-    delay: 50,                    // Velocidad de escritura (ms)
-    enableLogging: true,          // Para ver qué diablos está pasando
-    rightClickEnabled: true       // Por si prefieres usar vncPaste.sendString('text here')
+    selector: '#noVNC_canvas',    // Main canvas selector
+    fallbackSelector: 'canvas',   // Fallback selector if main fails
+    delay: 50,                    // Typing speed (ms)
+    enableLogging: true,          // To see what the hell is happening
+    rightClickEnabled: true       // In case you prefer using vncPaste.sendString('text here')
 });
 vncPaste.init();
 
-// O si quieres ser más específico:
+// Or if you want to be more specific:
 const vncPasteCustom = new VNCPaste({
-    selector: '#miCanvasEspecial',
-    delay: 100,                   // Más lento para conexiones lentas
-    enableLogging: false,         // Modo silencioso
-    rightClickEnabled: false      // Desactiva el clic derecho
+    selector: '#mySpecialCanvas',
+    delay: 100,                   // Slower for slow connections
+    enableLogging: false,         // Silent mode
+    rightClickEnabled: false      // Disable right-click
 });
 vncPasteCustom.init();
 ```
 
-## Problemas Conocidos 🐛
-- A veces falla con algunos caracteres especiales ( o quizas ya lo arregle )
-- No es la solución más elegante del mundo (pero eso ya lo sabías)
-- Probablemente hay mejores maneras de hacer esto
-- Escribir no cuesta tanto 
-- Pegar el script de un desconocido en tu consola no suena como una buena idea
+## Known Issues 🐛
+- Sometimes fails with some special characters (or maybe I already fixed it)
+- It's not the most elegant solution in the world (but you already knew that)
+- There are probably better ways to do this
+- Typing doesn't cost that much
+- Pasting a script from a stranger in your console doesn't sound like a good idea
+- **This is experimental software** - may break unexpectedly
 
-## Contribuir 🤝
-¿Quieres hacer este proyecto menos estúpido? ¡Adelante!
-- Arregla cosas
-- Agrega features
-- Hazlo mejor
-- Vamos a ponerlo en una extension de chrome
-- O simplemente úsalo y ríete
+## Bug Fixes in V1.3 🔧
+- **Fixed case inversion bug**: Previously, uppercase letters were being typed as lowercase and vice versa. Now "VNCPaste" stays "VNCPaste"! ✨
 
-## Licencia 📄
-Haz lo que quieras con esto. En serio. no es como que me pueda volver rico con este repo
+## Contributing 🤝
+Want to make this project less stupid? Go ahead!
+- Fix things
+- Add features
+- Make it better
+- Let's put it in a chrome extension
+- Or just use it and laugh
+
+## License 📄
+Do whatever you want with this. Seriously. It's not like I can get rich with this repo
 
 ---
-Hecho con 💖 por [alew140](https://alew140.com)
+Made with 💖 by [alew140](https://alew140.dev)
 ---

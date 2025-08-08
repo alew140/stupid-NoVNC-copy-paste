@@ -70,7 +70,15 @@ class VNCPaste {
 
     async sendKeyboardEvents(char) {
         const specialKey = this.specialKeys.get(char);
-        const keyInfo = specialKey || { key: char, shiftKey: false };
+        let keyInfo;
+        
+        if (specialKey) {
+            keyInfo = specialKey;
+        } else if (/[A-Z]/.test(char)) {
+            keyInfo = { key: char, shiftKey: true };
+        } else {
+            keyInfo = { key: char, shiftKey: false };
+        }
 
         const events = ['keydown', 'keypress', 'keyup'];
         
