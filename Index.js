@@ -84,16 +84,12 @@ class VNCPaste {
         
         for (const eventType of events) {
             try {
-                await new Promise(resolve => {
-                    setTimeout(() => {
-                        this.canvas.dispatchEvent(
-                            this.createKeyboardEvent(eventType, keyInfo.key, {
-                                shiftKey: keyInfo.shiftKey
-                            })
-                        );
-                        resolve();
-                    }, 10);
-                });
+                await this.sleep(10)
+                this.canvas.dispatchEvent(
+                    this.createKeyboardEvent(eventType, keyInfo.key, {
+                        shiftKey: keyInfo.shiftKey
+                    })
+                );
             } catch (error) {
                 this.error(`Error enviando evento ${eventType}:`, error);
                 throw error;
@@ -110,9 +106,9 @@ class VNCPaste {
         );
     }
 
-    async sleep() {
+    async sleep(delay=this.config.delay) {
         return await new Promise(resolve => 
-            setTimeout(resolve, this.config.delay)
+            setTimeout(resolve, delay)
         );
     }
 
