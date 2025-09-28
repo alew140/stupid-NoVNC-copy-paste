@@ -84,21 +84,32 @@ class VNCPaste {
         
         for (const eventType of events) {
             try {
-                await new Promise(resolve => {
-                    setTimeout(() => {
-                        this.canvas.dispatchEvent(
-                            this.createKeyboardEvent(eventType, keyInfo.key, {
-                                shiftKey: keyInfo.shiftKey
-                            })
-                        );
-                        resolve();
-                    }, 10);
-                });
+                await this.sleep(10)
+                this.canvas.dispatchEvent(
+                    this.createKeyboardEvent(eventType, keyInfo.key, {
+                        shiftKey: keyInfo.shiftKey
+                    })
+                );
             } catch (error) {
                 this.error(`Error enviando evento ${eventType}:`, error);
                 throw error;
             }
         }
+    }
+
+    async sendShiftEvent(down) {
+        this.canvas.dispatchEvent(
+            new KeyboardEvent(down ? 'keydown' : 'keyup', {
+                code: 'ShiftLeft',
+                shiftKey: false,
+            })
+        );
+    }
+
+    async sleep(delay=this.config.delay) {
+        return await new Promise(resolve => 
+            setTimeout(resolve, delay)
+        );
     }
 
     async sendString(text) {
@@ -107,11 +118,28 @@ class VNCPaste {
             return;
         }
 
+        let shiftPressed = false;
+
+        const onShiftStateChange = async () => {
+            shiftPressed = !shiftPressed
+            await this.sendShiftEvent(shiftPressed)
+            await this.sleep()
+        }
+
         for (let i = 0; i < text.length; i++) {
             try {
-                await new Promise(resolve => 
-                    setTimeout(resolve, this.config.delay)
-                );
+                await this.sleep()
+
+                if (/[A-Z]/.test(text[i])) {
+                    if (!shiftPressed) {
+                        await onShiftStateChange()
+                    }
+                } else {
+                    if (shiftPressed) {
+                        await onShiftStateChange()
+                    }
+                }
+
                 await this.sendKeyboardEvents(text[i]);
             } catch (error) {
                 this.error(`Error enviando caracter '${text[i]}':`, error);
