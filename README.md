@@ -1,4 +1,4 @@
-# stupid-NoVNC-copy-paste 📋 V 1.3
+# stupid-NoVNC-copy-paste 📋 V 1.4
 
 > Because sometimes the dumbest solutions are the best! 🚀
 
@@ -23,7 +23,7 @@ This example includes uppercase, lowercase, and special characters - all should 
 
 ## What's New in this Version 🎉
 - Finally! Support for symbols that need Shift (@, #, $, etc)
-- **Fixed case handling!** Now uppercase and lowercase letters work correctly 🎯⚠️ **Experimental**
+- **Fixed case handling!** Now uppercase and lowercase letters work correctly thanks @SiegfriedSchmidt 🎯
 - Customizable configuration (in case you want to make it even more stupid)
 - Better error handling (because things can fail)
 
