@@ -1,4 +1,4 @@
-# stupid-NoVNC-copy-paste 📋 V 1.4
+# stupid-NoVNC-copy-paste 📋 V 1.5
 
 > Because sometimes the dumbest solutions are the best! 🚀
 
@@ -55,7 +55,30 @@ vncPasteCustom.init();
 - There are probably better ways to do this
 - Typing doesn't cost that much
 - Pasting a script from a stranger in your console doesn't sound like a good idea
-- **This is experimental software** - may break unexpectedly
+
+
+
+## What's New in V1.5 🚀
+- **Fixed Newline Handling**: `\n` now actually presses Enter! No more single-line disasters.
+- **Windows Support**: Fixed the double-enter issue with `\r\n`. We strip the `\r` because we don't need that negativity in our lives.
+- **Manual Testing Guide**: Added tips for the brave souls who type commands manually.
+
+## Manual Testing (For the brave/bored) 🤠
+If you are manually typing `sendString` in the console because you like typing:
+- `\n` = Presses **Enter** (New line)
+- `\\n` = Types `\n` literally (like for `echo -e`)
+
+```javascript
+// Example: Press Enter after typing 'ls' (Executes the command)
+vncPaste.sendString('ls\n');
+
+// Example: Type a literal \n (Good for echo commands)
+vncPaste.sendString('echo -e "\\nLine 1\\nLine 2 \\nLine 3"');
+```
+
+So if your `echo` command executes in 3 separate lines, it's because you forgot to escape the backslash. That's on you. 🤷‍♂️
+
+
 
 ## Bug Fixes in V1.3 🔧
 - **Fixed case inversion bug**: Previously, uppercase letters were being typed as lowercase and vice versa. Now "VNCPaste" stays "VNCPaste"! ✨

@@ -8,7 +8,7 @@ class VNCPaste {
             rightClickEnabled: true,
             ...config
         };
-        
+
         this.canvas = null;
         this.isInitialized = false;
         this.specialKeys = new Map([
@@ -30,7 +30,8 @@ class VNCPaste {
             ['"', { key: "'", shiftKey: true }],
             ['<', { key: ',', shiftKey: true }],
             ['>', { key: '.', shiftKey: true }],
-            ['?', { key: '/', shiftKey: true }]
+            ['?', { key: '/', shiftKey: true }],
+            ['\n', { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, charCode: 13, shiftKey: false }]
         ]);
     }
 
@@ -45,9 +46,9 @@ class VNCPaste {
     }
 
     findCanvas() {
-        this.canvas = document.querySelector(this.config.selector) || 
-                     document.querySelector(this.config.fallbackSelector);
-        
+        this.canvas = document.querySelector(this.config.selector) ||
+            document.querySelector(this.config.fallbackSelector);
+
         if (!this.canvas) {
             throw new Error('No se encontró el elemento canvas');
         }
@@ -71,7 +72,7 @@ class VNCPaste {
     async sendKeyboardEvents(char) {
         const specialKey = this.specialKeys.get(char);
         let keyInfo;
-        
+
         if (specialKey) {
             keyInfo = specialKey;
         } else if (/[A-Z]/.test(char)) {
@@ -81,13 +82,13 @@ class VNCPaste {
         }
 
         const events = ['keydown', 'keypress', 'keyup'];
-        
+
         for (const eventType of events) {
             try {
                 await this.sleep(10)
                 this.canvas.dispatchEvent(
                     this.createKeyboardEvent(eventType, keyInfo.key, {
-                        shiftKey: keyInfo.shiftKey
+                        ...keyInfo
                     })
                 );
             } catch (error) {
@@ -106,8 +107,8 @@ class VNCPaste {
         );
     }
 
-    async sleep(delay=this.config.delay) {
-        return await new Promise(resolve => 
+    async sleep(delay = this.config.delay) {
+        return await new Promise(resolve =>
             setTimeout(resolve, delay)
         );
     }
@@ -117,6 +118,9 @@ class VNCPaste {
             this.error('Canvas no inicializado');
             return;
         }
+
+        // Remove carriage returns to handle Windows line endings (\r\n)
+        text = text.replace(/\r/g, '');
 
         let shiftPressed = false;
 
@@ -150,7 +154,7 @@ class VNCPaste {
     async handleRightClick(event) {
         if (event.button === 2 && this.config.rightClickEnabled) {
             event.preventDefault();
-            
+
             try {
                 const text = await navigator.clipboard.readText();
                 await this.sendString(text);
@@ -169,16 +173,16 @@ class VNCPaste {
 
         try {
             this.findCanvas();
-            
-            this.canvas.addEventListener('mousedown', 
+
+            this.canvas.addEventListener('mousedown',
                 this.handleRightClick.bind(this)
             );
-            
+
             window.sendString = this.sendString.bind(this);
-            
+
             this.isInitialized = true;
             this.log('Inicializado correctamente');
-            
+
         } catch (error) {
             this.error('Error durante la inicialización:', error);
             throw error;
@@ -189,11 +193,11 @@ class VNCPaste {
         if (!this.isInitialized) return;
 
         if (this.canvas) {
-            this.canvas.removeEventListener('mousedown', 
+            this.canvas.removeEventListener('mousedown',
                 this.handleRightClick.bind(this)
             );
         }
-        
+
         delete window.sendString;
         this.isInitialized = false;
         this.log('Destruido correctamente');
