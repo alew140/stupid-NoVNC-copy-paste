@@ -1,99 +1,160 @@
-# stupid-NoVNC-copy-paste 📋 V 1.5
+# VNCPaste
 
-> Because sometimes the dumbest solutions are the best! 🚀
+> Clipboard-to-keyboard bridge for NoVNC — paste text into remote desktop sessions with a single right-click.
 
-Add copy-paste to NoVNC with a ridiculously simple Javascript script. Now with support for special characters, proper case handling, and more configurations.
+[![CI](https://github.com/alew140/stupid-NoVNC-copy-paste/actions/workflows/ci.yml/badge.svg)](https://github.com/alew140/stupid-NoVNC-copy-paste/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/novnc-paste.svg)](https://www.npmjs.com/package/novnc-paste)
 
+---
 
-## Why? 🤔
-Because having to type everything manually in NoVNC is stupid. And yes, there are probably better ways to do this, but hey, this works!
+## What is this?
 
-## Quick Start ⚡
-1. Press `F12` to open the browser console
-2. Copy the content of `index.js`
-3. Paste it in the console
-4. Done! Now use right-click to paste text in your NoVNC session
+NoVNC doesn't expose a native paste shortcut in many configurations. **VNCPaste** solves this by intercepting a right-click on the NoVNC canvas and replaying your clipboard contents as a stream of synthetic keyboard events — no browser extension, no server changes, no dependencies.
 
-### Test Example 🧪
-Try copying and pasting this text to test the functionality:
+Drop it in the browser console, paste with a right-click.
+
 ```
-VNCPaste@2025#TestHash$Alew140.dev%
+VNCPaste@2025#TestHash$Alew140.dev%  ← All of this pastes correctly
 ```
-This example includes uppercase, lowercase, and special characters - all should work correctly now!
 
-## What's New in this Version 🎉
-- Finally! Support for symbols that need Shift (@, #, $, etc)
-- **Fixed case handling!** Now uppercase and lowercase letters work correctly thanks @SiegfriedSchmidt 🎯
-- Customizable configuration (in case you want to make it even more stupid)
-- Better error handling (because things can fail)
+Supports:
+- Uppercase & lowercase letters
+- Shift-dependent special characters (`@`, `#`, `$`, `%`, `^`, `&`, `*`, …)
+- Newlines (`\n`) → Enter key
+- Windows line endings (`\r\n`) normalised automatically
 
-## Configuration (that we don't need) ⚙️
+---
+
+## Quick Start
+
+### Option A — Browser console (30 seconds)
+
+1. Open your NoVNC session in the browser.
+2. Press **F12** → open the **Console** tab.
+3. Copy the contents of [`index.js`](index.js).
+4. Paste into the console and press **Enter**.
+5. **Right-click** the NoVNC canvas to paste clipboard text.
+
+### Option B — Bookmarklet
+
+Create a bookmark whose URL is:
+
+```
+javascript:(function(){fetch('https://cdn.jsdelivr.net/gh/alew140/stupid-NoVNC-copy-paste@main/index.js').then(r=>r.text()).then(eval)})();
+```
+
+Click the bookmark while a NoVNC tab is active to inject VNCPaste automatically.
+
+---
+
+## Configuration
+
+VNCPaste is zero-config by default. All options are optional.
+
 ```javascript
-// Default configuration
 const vncPaste = new VNCPaste({
-    selector: '#noVNC_canvas',    // Main canvas selector
-    fallbackSelector: 'canvas',   // Fallback selector if main fails
-    delay: 50,                    // Typing speed (ms)
-    enableLogging: true,          // To see what the hell is happening
-    rightClickEnabled: true       // In case you prefer using vncPaste.sendString('text here')
+    selector: '#noVNC_canvas',  // Primary CSS selector for the canvas
+    fallbackSelector: 'canvas', // Fallback selector
+    delay: 50,                  // Inter-character delay in ms (increase for slow connections)
+    enableLogging: true,        // Log activity to the browser console
+    rightClickEnabled: true,    // Right-click-to-paste (set false to use sendString() only)
 });
-vncPaste.init();
 
-// Or if you want to be more specific:
-const vncPasteCustom = new VNCPaste({
-    selector: '#mySpecialCanvas',
-    delay: 100,                   // Slower for slow connections
-    enableLogging: false,         // Silent mode
-    rightClickEnabled: false      // Disable right-click
-});
-vncPasteCustom.init();
+vncPaste.init();
 ```
 
-## Known Issues 🐛
-- Sometimes fails with some special characters (or maybe I already fixed it)
-- It's not the most elegant solution in the world (but you already knew that)
-- There are probably better ways to do this
-- Typing doesn't cost that much
-- Pasting a script from a stranger in your console doesn't sound like a good idea
-
-
-
-## What's New in V1.5 🚀
-- **Fixed Newline Handling**: `\n` now actually presses Enter! No more single-line disasters.
-- **Windows Support**: Fixed the double-enter issue with `\r\n`. We strip the `\r` because we don't need that negativity in our lives.
-- **Manual Testing Guide**: Added tips for the brave souls who type commands manually.
-
-## Manual Testing (For the brave/bored) 🤠
-If you are manually typing `sendString` in the console because you like typing:
-- `\n` = Presses **Enter** (New line)
-- `\\n` = Types `\n` literally (like for `echo -e`)
+### Programmatic usage
 
 ```javascript
-// Example: Press Enter after typing 'ls' (Executes the command)
-vncPaste.sendString('ls\n');
+// Type text without right-clicking
+vncPaste.sendString('echo "Hello, World!"\n');
 
-// Example: Type a literal \n (Good for echo commands)
-vncPaste.sendString('echo -e "\\nLine 1\\nLine 2 \\nLine 3"');
+// Also available as a global shorthand after init()
+sendString('ls -la\n');
 ```
 
-So if your `echo` command executes in 3 separate lines, it's because you forgot to escape the backslash. That's on you. 🤷‍♂️
+### Teardown
 
-
-
-## Bug Fixes in V1.3 🔧
-- **Fixed case inversion bug**: Previously, uppercase letters were being typed as lowercase and vice versa. Now "VNCPaste" stays "VNCPaste"! ✨
-
-## Contributing 🤝
-Want to make this project less stupid? Go ahead!
-- Fix things
-- Add features
-- Make it better
-- Let's put it in a chrome extension
-- Or just use it and laugh
-
-## License 📄
-Do whatever you want with this. Seriously. It's not like I can get rich with this repo
+```javascript
+vncPaste.destroy(); // Removes listeners and cleans up window.sendString
+```
 
 ---
-Made with 💖 by [alew140](https://alew140.dev)
+
+## Escaping backslashes in the console
+
+When typing `sendString` directly in the browser console, remember that the console processes JavaScript string literals:
+
+| You type | What gets sent |
+|---|---|
+| `sendString('\\n')` | literal `\n` |
+| `sendString('\n')` | Enter key |
+
+```javascript
+// Execute a command
+sendString('ls\n');
+
+// Type a literal \n inside a shell string
+sendString('echo -e "\\nLine 1\\nLine 2"');
+```
+
 ---
+
+## Development
+
+### Prerequisites
+
+- **Node.js** ≥ 18
+- **npm** ≥ 9
+
+### Setup
+
+```bash
+git clone https://github.com/alew140/stupid-NoVNC-copy-paste.git
+cd stupid-NoVNC-copy-paste
+npm install
+```
+
+### Available scripts
+
+| Command | Description |
+|---|---|
+| `npm test` | Run the test suite (Jest + jsdom) |
+| `npm run test:coverage` | Run tests with coverage report |
+| `npm run lint` | Lint source and tests (ESLint) |
+| `npm run lint:fix` | Auto-fix lint issues |
+
+### Running tests
+
+```bash
+npm test
+```
+
+```
+Tests:       29 passed, 29 total
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+---
+
+## Roadmap
+
+See the [GitHub Issues](https://github.com/alew140/stupid-NoVNC-copy-paste/issues) and [Milestones](https://github.com/alew140/stupid-NoVNC-copy-paste/milestones) for the 1.0 plan.
+
+---
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a full history of changes.
+
+---
+
+## License
+
+[MIT](LICENSE) © [alew140](https://alew140.dev)

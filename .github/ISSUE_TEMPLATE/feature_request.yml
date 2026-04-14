@@ -1,0 +1,36 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement! Please describe your idea clearly.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What can't you do today? Why is it a problem?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How should VNCPaste behave after this change?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Have you tried any workarounds? Are there other approaches?
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any screenshots, links, or other details that might help.

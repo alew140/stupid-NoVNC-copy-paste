@@ -1,0 +1,69 @@
+name: Bug Report
+description: Something isn't working as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill in as many fields as possible.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: How do we trigger the bug?
+      placeholder: |
+        1. Open NoVNC at …
+        2. Paste the script in the console
+        3. Right-click the canvas
+        4. Observe …
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console output
+      description: Copy any `[VNCPaste]` lines from the browser console (F12 → Console).
+      render: text
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & version
+      placeholder: Chrome 124, Firefox 126, …
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows 11, Ubuntu 24.04, macOS 14, …
+
+  - type: input
+    id: novnc-version
+    attributes:
+      label: NoVNC version (if known)
