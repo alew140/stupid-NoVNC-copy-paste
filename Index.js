@@ -22,7 +22,7 @@ class VNCPaste {
             ['(', { key: '9', shiftKey: true }],
             [')', { key: '0', shiftKey: true }],
             ['_', { key: '-', shiftKey: true }],
-            ['+', { key: '=', shiftKey: true }],
+            ['+', { key: '+', code: 'Equal', keyCode: 187, charCode: 43, which: 187, shiftKey: true }],
             ['{', { key: '[', shiftKey: true }],
             ['}', { key: ']', shiftKey: true }],
             ['|', { key: '\\', shiftKey: true }],
